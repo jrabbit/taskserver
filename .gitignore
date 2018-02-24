@@ -11,3 +11,13 @@ _CPack_Packages
 #patches
 *.exe
 *~
+debian/.debhelper/
+debian/debhelper-build-stamp
+debian/files
+debian/taskd.debhelper.log
+debian/taskd.postinst.debhelper
+debian/taskd.postrm.debhelper
+debian/taskd.prerm.debhelper
+debian/taskd.substvars
+debian/taskd/
+obj-x86_64-linux-gnu/
