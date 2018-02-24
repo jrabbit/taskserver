@@ -1,6 +1,2 @@
-001-log-to-stdout.patch
-002-remove-date-time.patch
-003-fix-man-minus-sign.patch
 004-fix-defaults.patch
-005-username.patch
 006-test-target.patch
