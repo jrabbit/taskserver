@@ -1,0 +1,18 @@
+Description: Run as Debian-taskd instead of taskd
+Author: Gordon Ball <gordon@chronitis.net>
+Forwarded: not-needed
+Last-Update: 2015-07-21
+
+--- a/scripts/systemd/taskd.service
++++ b/scripts/systemd/taskd.service
+@@ -7,8 +7,8 @@
+ ExecStart=/usr/bin/taskd server --data /var/lib/taskd --log=-
+ Restart=on-abort
+ Type=simple
+-User=taskd
+-Group=taskd
++User=Debian-taskd
++Group=Debian-taskd
+ 
+ [Install]
+ WantedBy=multi-user.target

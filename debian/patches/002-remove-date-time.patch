@@ -1,0 +1,19 @@
+Description: Remove binary timestamps (reproductive builds)
+ In order to make the build reproductive we need to avoid all
+ dynamic generated var (like date).
+Author: Gordon Ball <gordon@chronitis.net>
+Forwarded: https://bug.tasktools.org/browse/TD-108
+Reviewed-by: Sebastien Badia <seb@sebian.fr>
+Last-Update: 2015-07-16
+
+
+--- a/src/diag.cpp
++++ b/src/diag.cpp
+@@ -148,7 +148,6 @@
+             << "\n"
+ 
+   // Build date.
+-            << "       Built: " << __DATE__ << " " << __TIME__ << "\n"
+ #ifdef HAVE_COMMIT
+             << "      Commit: " << COMMIT << "\n"
+ #endif

@@ -1,0 +1,18 @@
+Description: Log output to stdout (systemd)
+Author: Gordon Ball <gordon@chronitis.net>
+Forwarded: https://bug.tasktools.org/browse/TD-100
+Reviewed-by: Sebastien Badia <seb@sebian.fr>
+Applied-Upstream: 8bc4350b65cb973e72fa7e94781e445b5698c6e4
+Last-Update: 2015-07-16
+
+--- a/scripts/systemd/taskd.service
++++ b/scripts/systemd/taskd.service
+@@ -4,7 +4,7 @@
+ Documentation=http://taskwarrior.org/docs/
+ 
+ [Service]
+-ExecStart=/usr/bin/taskd server --data /var/lib/taskd
++ExecStart=/usr/bin/taskd server --data /var/lib/taskd --log=-
+ Restart=on-abort
+ Type=simple
+ User=taskd
