@@ -1,0 +1,30 @@
+Description: fix errors in cmake test target
+Author: Gordon Ball <gordon@chronitis.net>
+Forwarded: no
+Applied-Upstream: 25265a24d65b6b597a5018ae7d2e71780d548cd9
+Last-Update: 2015-09-15
+--- a/CMakeLists.txt
++++ b/CMakeLists.txt
+@@ -161,9 +161,9 @@
+ 
+ add_subdirectory (src)
+ add_subdirectory (doc)
+-if (EXISTS test)
++if (EXISTS ${CMAKE_SOURCE_DIR}/test)
+   add_subdirectory (test EXCLUDE_FROM_ALL)
+-endif (EXISTS test)
++endif (EXISTS ${CMAKE_SOURCE_DIR}/test)
+ 
+ set (doc_FILES NEWS ChangeLog INSTALL AUTHORS COPYING)
+ foreach (doc_FILE ${doc_FILES})
+--- a/test/CMakeLists.txt
++++ b/test/CMakeLists.txt
+@@ -28,7 +28,7 @@
+ 
+ add_custom_target (test ./run_all --verbose
+                         DEPENDS ${test_SRCS}
+-                        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/test)
++                        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}/test)
+ 
+ add_custom_target (build_tests DEPENDS ${test_SRCS}
+                                WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/test)

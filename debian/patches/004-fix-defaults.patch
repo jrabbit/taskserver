@@ -1,0 +1,19 @@
+Description: Fix pid file path
+ The default location for the pid file is in tmp, this patch
+ fix the path of this file to usr /run instead.
+Author: Gordon Ball <gordon@chronitis.net>
+Forwarded: https://bug.tasktools.org/browse/TD-109
+Reviewed-by: Sebastien Badia <seb@sebian.fr>
+Last-Update: 2015-07-16
+
+--- a/src/init.cpp
++++ b/src/init.cpp
+@@ -59,7 +59,7 @@
+   db._config->set ("extensions", TASKD_EXTDIR);
+   db._config->setIfBlank ("log",           "/tmp/taskd.log");
+   db._config->setIfBlank ("queue.size",    "10");
+-  db._config->setIfBlank ("pid.file",      "/tmp/taskd.pid");
++  db._config->setIfBlank ("pid.file",      "/run/taskd.pid");
+   db._config->setIfBlank ("ip.log",        "on");
+   db._config->setIfBlank ("request.limit", "1048576");
+   db._config->setIfBlank ("confirmation",  "1");
