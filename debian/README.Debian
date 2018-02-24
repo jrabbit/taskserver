@@ -1,0 +1,35 @@
+Debian README for taskd
+-----------------------
+
+This package requires manual configuration before it will do anything useful.
+The instructions at http://taskwarrior.org/docs/taskserver/setup.html mostly
+apply with some differences in paths.
+
+ + the server runs as the user "Debian-taskd"
+ + data is stored in "/var/lib/taskd", config in "/etc/taskd/config"
+
+You will need to:
+
+ + set the server location, unless you want to listen to localhost only
+   (taskd config --force server my.server:53589)
+ + create certificates (the packaged PKI generation scripts are in
+   /usr/share/taskd/pki) and configure taskd with their location
+   (taskd config --force server.cert /path/to/server.cert) - you'll
+   need to edit the "vars" file with appropriate values before generating
+   certificates or they will appear to have been issued by the original
+   taskd developers
+ + create an organisation and one or more users (taskd add org ORGNAME,
+   taskd add user ORGNAME USERNAME); be careful to do this as the server's
+   user and not root or you will have permission issues
+ + restart the server to pick up the new configuration
+ + configure the user's taskwarrior client (2.4.0 or later) to communicate
+   with the server
+
+Controlling the server:
+
+ + under sysv the server runs as a normal daemon with a pidfile in /run
+ + under systemd the server runs as a simple process, logging to stdout
+   (and hence to the systemd journal); please note that the upstream
+   taskdctl script does not work in this case, use systemctl instead
+
+

@@ -1,0 +1,8 @@
+taskd for Debian
+----------------
+
+Upstream src/tls/* was remove because its appears to be an unused code example from GNUTLS
+a question was filled upstream here https://bug.tasktools.org/browse/TD-110 in order to know
+if upstream can remove it also in shipped tarballs.
+
+ -- Sebastien Badia <seb@sebian.fr>  Tue, 22 Dec 2015 23:38:01 +0100

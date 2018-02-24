@@ -1,0 +1,28 @@
+Source: taskd
+Section: utils
+Priority: extra
+Maintainer: Debian Tasktools Packaging Team <taskdeb-discuss@nongnu.org>
+Uploaders: Gordon Ball <gordon@chronitis.net>, Sebastien Badia <seb@sebian.fr>
+Build-Depends: cmake,
+               debhelper (>= 10),
+               libgnutls28-dev,
+               perl,
+               python,
+               uuid-dev
+Standards-Version: 3.9.8
+Homepage: http://tasktools.org/projects/taskd.html
+Vcs-Git: https://anonscm.debian.org/git/pkg-tasktools/taskd.git
+Vcs-Browser: https://anonscm.debian.org/git/pkg-tasktools/taskd.git
+
+Package: taskd
+Architecture: any
+Depends: adduser,
+         gnutls-bin,
+         lsb-base (>= 3.0-6),
+         ${misc:Depends},
+         ${shlibs:Depends}
+Suggests: taskwarrior
+Description: Synchronisation server for taskwarrior
+ This is the server for the taskwarrior synchronisation function
+ (task sync). Multiple users and multiple clients per user are supported.
+ Connections are secured with TLS using user-generated certificates.

@@ -1,0 +1,5 @@
+debian/contrib/config etc/taskd/
+mon/* usr/share/taskd/mon/
+pki/* usr/share/taskd/pki
+scripts/setup_server.bash usr/share/taskd/
+scripts/systemd/taskd.service lib/systemd/system

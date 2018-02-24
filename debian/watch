@@ -1,0 +1,3 @@
+version=3
+opts="uversionmangle=s/[.]beta/~beta/,dversionmangle=s/[+]dfsg//" \
+http://tasktools.org http://taskwarrior.org/download/taskd-(.*)\.tar\.gz
