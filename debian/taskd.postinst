@@ -1,0 +1,22 @@
+#!/bin/sh
+
+set -e
+
+case "$1" in
+    configure)
+
+      # Create taskd user
+      if ! getent passwd Debian-taskd > /dev/null 2>&1
+      then
+        adduser --system --group --quiet \
+          --home /var/lib/taskd --no-create-home \
+          --shell /usr/sbin/nologin --gecos "Taskd sync server" \
+          --force-badname Debian-taskd
+      fi
+
+      chown -R Debian-taskd: /var/lib/taskd /etc/taskd
+
+    ;;
+esac
+
+#DEBHELPER#

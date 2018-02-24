@@ -1,0 +1,15 @@
+TODO for taskd debian packaging
+-------------------------------
+
+ * taskdctl is probably not very useful under systemd - either remove it,
+   or make it a wrapper around systemctl
+ * decide how much set up to do by default:
+     + consider whether debconf questions doing basic server config should
+       be included (I think probably not - I don't think we can sensibly
+       generate default PKI so some manual work will always be necessary)
+ * document whatever decisions are made for the above item and consequently
+   how the server should be configured (and any differences from the upstream
+   docs) in README.Debian
+ * consider whether the orig tarball should include the tests available from
+   upstream (in git, but not in the tarball) - something like get-orig-source
+   from pkg:task would be needed
