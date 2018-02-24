@@ -1,3 +1,9 @@
+taskd (1.2.0-1) UNRELEASED; urgency=medium
+
+  * awooo
+
+ -- Jack Laxson <jack@prismo-ubuntu>  Sat, 24 Feb 2018 12:26:12 -0600
+
 taskd (1.1.0+dfsg-3) unstable; urgency=medium
 
   * Team upload.
