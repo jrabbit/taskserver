@@ -171,16 +171,23 @@ def scan_root(root, data):
       if os.path.exists(data_path):
         data['bytes'] += os.stat(data_path).st_size
 
+
+def safe_div(numerator, divisor):
+  if divisor == 0:
+    return 0
+  else:
+    return numerator / divisor
+
 ################################################################################
 def show_profile(root, data):
-  days = (data['newest'] - data['oldest']).total_seconds() / 86400.0
+  days = datetime.timedelta(data['newest'] - data['oldest']).total_seconds() / 86400.0
   total_users = len(data['total_users'])
 
   print
   print "[1mServer[0m"
   print "  Time range:             ", (data['newest'] - data['oldest'])
   print "  Bounces:                ", data['bounce']
-  print "  Average uptime:          %.2f days" % (days / data['bounce'])
+  print "  Average uptime:          %.2f days" % safe_div(days, data['bounce'])
   print "  Errors:                 ", data['errors']
   print "  Warnings:               ", data['warnings']
   if root:
@@ -200,20 +207,20 @@ def show_profile(root, data):
 
   print "[1mTraffic[0m"
   if data['bounce']:
-    print "  Syncs per bounce:        %.2f" % (1.0 * data['sync'] / data['bounce'])
-  print "  Average syncs:           %.2f per day" % (data['sync'] / days)
+    print "  Syncs per bounce:        %.2f" % safe_div(1.0 * data['sync'], data['bounce'])
+  print "  Average syncs:           %.2f per day" % safe_div(data['sync'], days)
   print "  Merged:                  %d taskѕ" % data['merged']
   print "  Loaded:                  %d taskѕ" % data['loaded']
   print "  Clients:                ", len(data['clients'])
 
   print "[1mUser Profile[0m"
   if root and total_users:
-    print "  Syncs:                   %.2f per user, per day" % (data['sync']            / (total_users * days))
-    print "  Non-trivial syncs:       %.2f per user, per day" % (data['sync_nontrivial'] / (total_users * days))
+    print "  Syncs:                   %.2f per user, per day" % safe_div(data['sync'], (total_users * days))
+    print "  Non-trivial syncs:       %.2f per user, per day" % safe_div(data['sync_nontrivial'], (total_users * days))
   if root and total_users:
-    print "  Data:                    %d bytes per user" % (data['bytes'] / total_users)
+    print "  Data:                    %d bytes per user" % safe_div(data['bytes'], total_users)
   if data['sync']:
-    print "  Non-trivial sync ratio:  %.2f" % (1.0 * data['sync_nontrivial'] / data['sync'])
+    print "  Non-trivial sync ratio:  %.2f" % safe_div(1.0 * data['sync_nontrivial'], data['sync'])
   print
 
   if data['total_orgs']:
@@ -286,9 +293,9 @@ if __name__ == "__main__":
   parser.add_argument('--data', help='Location of data root.')
   args = parser.parse_args()
 
-  try:
-    main(args)
-  except Exception as msg:
-    print 'Error:', msg
+  # try:
+  main(args)
+  # except Exception as msg:
+  #   print 'Error:', msg
 
 ################################################################################
