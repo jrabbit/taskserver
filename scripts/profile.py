@@ -189,7 +189,7 @@ def safe_div(numerator, divisor):
 
 
 def show_profile(root, data):
-    days = datetime.timedelta(data["newest"] - data["oldest"]).total_seconds() / 86400.0
+    days = (data["newest"] - data["oldest"]).total_seconds() / 86400.0
     total_users = len(data["total_users"])
 
     print()
@@ -325,9 +325,6 @@ if __name__ == "__main__":
     parser.add_argument("--data", help="Location of data root.")
     args = parser.parse_args()
 
-    # try:
     main(args)
-# except Exception as msg:
-#   print 'Error:', msg
 
 ################################################################################
