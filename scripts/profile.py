@@ -183,79 +183,79 @@ def show_profile(root, data):
   days = datetime.timedelta(data['newest'] - data['oldest']).total_seconds() / 86400.0
   total_users = len(data['total_users'])
 
-  print
-  print "[1mServer[0m"
-  print "  Time range:             ", (data['newest'] - data['oldest'])
-  print "  Bounces:                ", data['bounce']
-  print "  Average uptime:          %.2f days" % safe_div(days, data['bounce'])
-  print "  Errors:                 ", data['errors']
-  print "  Warnings:               ", data['warnings']
+  print()
+  print("[1mServer[0m")
+  print("  Time range:             ", (data['newest'] - data['oldest']))
+  print("  Bounces:                ", data['bounce'])
+  print("  Average uptime:          %.2f days" % safe_div(days, data['bounce']))
+  print("  Errors:                 ", data['errors'])
+  print("  Warnings:               ", data['warnings'])
   if root:
-    print "  Data stored:            ", data['bytes'], 'bytes'
+    print("  Data stored:            ", data['bytes'], 'bytes')
 
   if len(data['errorcode']):
-    print "  Error Codes"
-    for code, count in sorted(data['errorcode'].iteritems()):
-      print "    Error %3s         %6d" % (code, count)
+    print("  Error Codes")
+    for code, count in sorted(data['errorcode'].items()):
+      print("    Error %3s         %6d" % (code, count))
 
-  print "[1mConfiguration[0m"
+  print("[1mConfiguration[0m")
   if root:
-    print "  Organizations:          ", len(data['total_orgs'])
-    print "  Users:                  ", len(data['total_users'])
-  print "  Active Organizations:   ", len(data['active_orgs'])
-  print "  Active Users:           ", len(data['active_users'])
+    print("  Organizations:          ", len(data['total_orgs']))
+    print("  Users:                  ", len(data['total_users']))
+  print("  Active Organizations:   ", len(data['active_orgs']))
+  print("  Active Users:           ", len(data['active_users']))
 
-  print "[1mTraffic[0m"
+  print("[1mTraffic[0m")
   if data['bounce']:
-    print "  Syncs per bounce:        %.2f" % safe_div(1.0 * data['sync'], data['bounce'])
-  print "  Average syncs:           %.2f per day" % safe_div(data['sync'], days)
-  print "  Merged:                  %d taskѕ" % data['merged']
-  print "  Loaded:                  %d taskѕ" % data['loaded']
-  print "  Clients:                ", len(data['clients'])
+    print("  Syncs per bounce:        %.2f" % safe_div(1.0 * data['sync'], data['bounce']))
+  print("  Average syncs:           %.2f per day" % safe_div(data['sync'], days))
+  print("  Merged:                  %d taskѕ" % data['merged'])
+  print("  Loaded:                  %d taskѕ" % data['loaded'])
+  print("  Clients:                ", len(data['clients']))
 
-  print "[1mUser Profile[0m"
+  print("[1mUser Profile[0m")
   if root and total_users:
-    print "  Syncs:                   %.2f per user, per day" % safe_div(data['sync'], (total_users * days))
-    print "  Non-trivial syncs:       %.2f per user, per day" % safe_div(data['sync_nontrivial'], (total_users * days))
+    print("  Syncs:                   %.2f per user, per day" % safe_div(data['sync'], (total_users * days)))
+    print("  Non-trivial syncs:       %.2f per user, per day" % safe_div(data['sync_nontrivial'], (total_users * days)))
   if root and total_users:
-    print "  Data:                    %d bytes per user" % safe_div(data['bytes'], total_users)
+    print("  Data:                    %d bytes per user" % safe_div(data['bytes'], total_users))
   if data['sync']:
-    print "  Non-trivial sync ratio:  %.2f" % safe_div(1.0 * data['sync_nontrivial'], data['sync'])
-  print
+    print("  Non-trivial sync ratio:  %.2f" % safe_div(1.0 * data['sync_nontrivial'], data['sync']))
+  print()
 
   if data['total_orgs']:
-    print "[1mOrgs[0m"
+    print("[1mOrgs[0m")
     for org in sorted(data['total_orgs']):
       if org in data['active_orgs']:
-        print ' ', org
+        print(' ', org)
       else:
-        print "  %s (inactive)" % org
-    print
+        print("  %s (inactive)" % org)
+    print()
   else:
-    print "[1mOrgs[0m"
+    print("[1mOrgs[0m")
     for org in sorted(data['active_orgs']):
-      print ' ', org
-    print
+      print(' ', org)
+    print()
 
   if data['total_users']:
-    print "[1mUsers[0m"
+    print("[1mUsers[0m")
     for user in sorted(data['total_users']):
       if user in data['active_users']:
-        print ' ', user
+        print(' ', user)
       else:
-        print "  %s (inactive)" % user
-    print
+        print("  %s (inactive)" % user)
+    print()
   else:
-    print "[1mUsers[0m"
+    print("[1mUsers[0m")
     for user in sorted(data['active_users']):
-      print ' ', user
-    print
+      print(' ', user)
+    print()
 
   if data['clients']:
-    print "[1mClients[0m"
+    print("[1mClients[0m")
     for client in sorted(data['clients']):
-      print ' ', client
-    print
+      print(' ', client)
+    print()
 
 ################################################################################
 def main(args):
