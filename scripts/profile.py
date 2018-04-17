@@ -1,4 +1,4 @@
-#! /usr/bin/env python2.7
+#!/usr/bin/env python
 # coding=UTF-8
 ################################################################################
 ## taskd = Taskserver
@@ -27,10 +27,11 @@
 ##
 ################################################################################
 
-import os
-import re
 import argparse
 import datetime
+import os
+import re
+import sys
 
 # Log format samples
 #
@@ -70,9 +71,6 @@ warning = re.compile("WARNING")
 
 
 def scan_log(file, data):
-    if not os.path.exists(file):
-        raise Exception("File '%s' does not exist" % file)
-
     with open(file) as fh:
         for line in fh.readlines():
 
@@ -163,19 +161,20 @@ def scan_log(file, data):
 
 
 def scan_root(root, data):
-    if not os.path.exists(root):
-        raise Exception("Directory '%s' does not exist" % root)
-
     orgs_path = os.path.join(root, "orgs")
-    for org in os.listdir(orgs_path):
-        data["total_orgs"].append(org)
-        users_path = os.path.join(orgs_path, org, "users")
-        for user in os.listdir(users_path):
-            data["total_users"].append(org + "/" + user)
-            data_path = os.path.join(users_path, user, "tx.data")
-            if os.path.exists(data_path):
-                data["bytes"] += os.stat(data_path).st_size
+    try:
+        for org in os.listdir(orgs_path):
+            data["total_orgs"].append(org)
+            users_path = os.path.join(orgs_path, org, "users")
+            for user in os.listdir(users_path):
+                data["total_users"].append(org + "/" + user)
+                data_path = os.path.join(users_path, user, "tx.data")
+                if os.path.exists(data_path):
+                    data["bytes"] += os.stat(data_path).st_size
 
+    except OSError:
+        print("Directory '%s' does not exist" % root)
+        sys.exit(24)
 
 def safe_div(numerator, divisor):
     if divisor == 0:
@@ -189,7 +188,10 @@ def safe_div(numerator, divisor):
 
 
 def show_profile(root, data):
-    days = (data["newest"] - data["oldest"]).total_seconds() / 86400.0
+    try:
+        days = (data["newest"] - data["oldest"]).total_seconds() / 86400.0
+    except AttributeError:
+        days = 0
     total_users = len(data["total_users"])
 
     print()
