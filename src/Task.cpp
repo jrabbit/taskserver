@@ -57,7 +57,6 @@
 #include <Variant.h>
 #include <Filter.h>
 
-
 #define APPROACHING_INFINITY 1000   // Close enough.  This isn't rocket surgery.
 
 extern Task& contextTask;
@@ -666,17 +665,14 @@ void Task::parseJSON (const json::object* root_obj)
       // TW-1274 Standardization.
       else if (i.first == "modification")
       {
-        auto text = i.second->dump ();
-        Lexer::dequote (text);
-        Datetime d (text);
+        Datetime d (Lexer::dequote (i.second->dump ()));
         set ("modified", d.toEpochString ());
       }
 
       // Dates are converted from ISO to epoch.
       else if (type == "date")
       {
-        auto text = i.second->dump ();
-        Lexer::dequote (text);
+        auto text = Lexer::dequote (i.second->dump ());
         Datetime d (text);
         set (i.first, text == "" ? "" : d.toEpochString ());
       }
@@ -728,19 +724,11 @@ void Task::parseJSON (const json::object* root_obj)
 
       // Strings are decoded.
       else if (type == "string")
-      {
-        auto text = i.second->dump ();
-        Lexer::dequote (text);
-        set (i.first, json::decode (text));
-      }
+        set (i.first, json::decode (Lexer::dequote (i.second->dump ())));
 
       // Other types are simply added.
       else
-      {
-        auto text = i.second->dump ();
-        Lexer::dequote (text);
-        set (i.first, text);
-      }
+        set (i.first, Lexer::dequote (i.second->dump ()));
     }
 
     // UDA orphans and annotations do not have columns.
@@ -784,9 +772,7 @@ void Task::parseJSON (const json::object* root_obj)
                 << "' --> preserved\n";
         Context::getContext ().debug (message.str ());
 #endif
-        auto text = i.second->dump ();
-        Lexer::dequote (text);
-        set (i.first, json::decode (text));
+        set (i.first, json::decode (Lexer::dequote (i.second->dump ())));
       }
     }
   }
